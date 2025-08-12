@@ -9,7 +9,7 @@ const {
 } = require("../controllers/driverController");
 const { protect } = require("../middlewares/authMiddleware");
 
-router.get("/", protect, getDrivers);
+router.get("/",  getDrivers);
 router.get("/:id", protect, getDriverById);
 router.post("/", protect, createDriver);
 router.put("/:id", protect, updateDriver);

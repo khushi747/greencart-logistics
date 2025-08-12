@@ -54,7 +54,7 @@ const validateSimulationInput = (req, res, next) => {
 };
 
 // Run delivery simulation  POST /api/simulation/run
-router.post("/run", protect, validateSimulationInput, runSimulation);
+router.post("/run", runSimulation);
 
 // Get simulation history with pagination  GET /api/simulation/history
 router.get("/history", protect, getSimulationHistory);
