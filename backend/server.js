@@ -8,6 +8,9 @@ connectDB(); // connect to MongoDB
 const app = express();
 app.use(express.json());
 
+app.use("/api/drivers", require("./routes/driverRoutes"));
+app.use("/api/routes", require("./routes/routeRoutes"));
+
 const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
