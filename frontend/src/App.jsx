@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import Login from "./components/Auth/Login";
-import Signup from "./components/Auth/SignUp";
+import Signup from "./components/Auth/Signup";
 import Dashboard from "./components/Dashboard/Dashboard";
 const PrivateRoute = ({ children }) => {
   const { user } = useAuth();
