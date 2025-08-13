@@ -33,19 +33,22 @@ const createOrder = async (req, res) => {
       simulationId,
     } = req.body;
 
-    if (!orderId || !valueRs || !routeId) {
-      return res
-        .status(400)
-        .json({ error: "orderId, valueRs, and routeId are required" });
+    if (!orderId) {
+      return res.status(400).json({ error: "orderId is required" });
     }
-
+    if (!valueRs) {
+      return res.status(400).json({ error: "Valid valueRs is required" });
+    }
+    if (!routeId) {
+      return res.status(400).json({ error: "routeId is required" });
+    }
     const order = await Order.create({
-      orderId,
-      valueRs,
-      routeId,
-      deliveryTimestamp,
-      assignedDriverId,
-      simulationId,
+      order_id: orderId,
+      value_rs: valueRs,
+      route_id: routeId,
+      delivery_time: deliveryTimestamp,
+      assigned_driver_id: assignedDriverId,
+      simulation_id: simulationId,
     });
 
     res.status(201).json(order);

@@ -1,4 +1,3 @@
-// src/components/Header/Header.jsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -18,9 +17,11 @@ const Header = () => {
       <nav className="flex space-x-4">
         {user ? (
           <>
-            <Link to="/dashboard" className="hover:underline">
-              Dashboard
-            </Link>
+            <div className="flex items-center justify-center">
+              <Link to="/dashboard" className="hover:underline">
+                Dashboard
+              </Link>
+            </div>
 
             <nav className="relative">
               <button
@@ -64,7 +65,7 @@ const Header = () => {
             </nav>
             <Link
               to="/simulation"
-              className="bg-green-500 hover:bg-green-600 px-3 py-1 rounded"
+              className="bg-green-500 hover:bg-green-600 px-3 py-1 rounded flex items-center justify-center"
             >
               Run Simulation
             </Link>
@@ -84,7 +85,7 @@ const Header = () => {
       {user && (
         <button
           onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded"
+          className="flex items-center justify-center bg-red-600 hover:bg-red-700 px-3 pb-3 py-2 rounded"
         >
           Logout
         </button>

@@ -34,11 +34,11 @@ const createRoute = async (req, res) => {
     }
 
     const route = await Route.create({
-      routeId,
-      distanceKm,
-      trafficLevel,
-      baseTimeMin,
-      isActive,
+      route_id: routeId,
+      distance_km: distanceKm,
+      traffic_level: trafficLevel,
+      base_time_min: baseTimeMin,
+      is_active: isActive,
     });
 
     res.status(201).json(route);

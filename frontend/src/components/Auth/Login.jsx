@@ -1,36 +1,36 @@
 // src/components/Auth/Login.js
-import React, { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: 'manager@greencart.com',
-    password: 'admin123'
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       await login(formData);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error) {
-      setError(error.message || 'Login failed');
+      setError(error.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -43,7 +43,9 @@ const Login = () => {
           <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-white text-2xl font-bold">GC</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800">GreenCart Logistics</h2>
+          <h2 className="text-2xl font-bold text-gray-800">
+            GreenCart Logistics
+          </h2>
           <p className="text-gray-600 mt-2">Manager Portal Login</p>
         </div>
 
@@ -55,7 +57,10 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Email Address
             </label>
             <input
@@ -71,7 +76,10 @@ const Login = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Password
             </label>
             <input
@@ -97,15 +105,19 @@ const Login = () => {
                 Logging in...
               </div>
             ) : (
-              'Login'
+              "Login"
             )}
           </button>
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-500">
-          <p>Demo Credentials:</p>
-          <p>Email: manager@greencart.com</p>
-          <p>Password: admin123</p>
+          <p>New User</p>{" "}
+          <Link
+            to="/signup"
+            className="text-green-700 font-semibold hover:underline"
+          >
+            Create an account
+          </Link>
         </div>
       </div>
     </div>

@@ -25,42 +25,58 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ email, password }) => {
     setLoading(true);
     setError(null);
+
     try {
-      const { data } = await loginUser({ email, password });
-      setUser({ email: data.email, role: data.role });
+      console.log("Attempting login with:", { email });
+      const response = await loginUser({ email, password });
+      console.log("Login response:", response.data);
+
+      const { data } = response;
+      setUser({ email: data.email, role: data.role, id: data._id });
       setIsAuthenticated(true);
       localStorage.setItem("token", data.token);
       localStorage.setItem(
         "user",
-        JSON.stringify({ email: data.email, role: data.role })
+        JSON.stringify({ email: data.email, role: data.role, id: data._id })
       );
-      setLoading(false);
+
       return true;
     } catch (err) {
-      setError(err.response?.data?.error || "Login failed");
+      console.error("Login error:", err);
+      const errorMessage = err.response?.data?.error || "Login failed";
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
       setLoading(false);
-      return false;
     }
   };
 
   const register = async (email, password, role) => {
     setLoading(true);
     setError(null);
+
     try {
-      const { data } = await registerUser({ email, password, role });
-      setUser({ email: data.email, role: data.role });
+      console.log("Attempting registration with:", { email, role });
+      const response = await registerUser({ email, password, role });
+      console.log("Registration response:", response.data);
+
+      const { data } = response;
+      setUser({ email: data.email, role: data.role, id: data._id });
       setIsAuthenticated(true);
       localStorage.setItem("token", data.token);
       localStorage.setItem(
         "user",
-        JSON.stringify({ email: data.email, role: data.role })
+        JSON.stringify({ email: data.email, role: data.role, id: data._id })
       );
-      setLoading(false);
+
       return true;
     } catch (err) {
-      setError(err.response?.data?.error || "Registration failed");
-      setLoading(false);
+      console.error("Registration error:", err);
+      const errorMessage = err.response?.data?.error || "Registration failed";
+      setError(errorMessage);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,11 +85,21 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
     setUser(null);
     setIsAuthenticated(false);
+    setError(null);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, error, isAuthenticated, login, logout, register }}
+      value={{
+        user,
+        loading,
+        error,
+        isAuthenticated,
+        login,
+        logout,
+        register,
+        setError,
+      }}
     >
       {children}
     </AuthContext.Provider>

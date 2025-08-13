@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { runSimulation } from "../../services/api"; // We will create this API call
-import DeliveryChart from "../Charts/DeliveryChart"; // Pie chart for On-time vs Late
-import FuelCostChart from "../Charts/FuelCostChart"; // Bar chart for fuel costs
-
+import { runSimulation } from "../../services/api";  
+import DeliveryChart from "../Charts/DeliveryChart";  
+import FuelCostChart from "../Charts/FuelCostChart";  
 const Simulation = () => {
   const [formData, setFormData] = useState({
     availableDrivers: 1,
@@ -30,12 +29,12 @@ const Simulation = () => {
     setError(null);
     setResult(null);
     const simStartTime = formData.startTime
-      ? formData.startTime.slice(11, 16) // gets 'HH:mm' from 'YYYY-MM-DDTHH:mm'
+      ? formData.startTime.slice(11, 16) 
       : "";
     try {
       const payload = {
         availableDrivers: formData.availableDrivers,
-        startTime: simStartTime, // send only HH:mm
+        startTime: simStartTime,  
         maxHoursPerDay: formData.maxHoursPerDay,
       };
 
