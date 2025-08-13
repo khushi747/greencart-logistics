@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000", // Local development
-      "https://your-frontend-app.vercel.app", // Will update this later
+      "https://greencart-logistics-eight.vercel.app", // Will update this later
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -30,6 +30,16 @@ const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.send("Welcome to our greencart-logistics");
+});
+
+// Health check
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "OK",
+    database:
+      mongoose.connection.readyState === 1 ? "Connected" : "Disconnected",
+    timestamp: new Date().toISOString(),
+  });
 });
 
 const startServer = async () => {
