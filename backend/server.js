@@ -4,10 +4,19 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 
 dotenv.config();
-connectDB(); // connect to MongoDB
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000", // Local development
+      "https://your-frontend-app.vercel.app", // Will update this later
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
 
 app.use("/api/drivers", require("./routes/driverRoutes"));
@@ -23,6 +32,11 @@ app.get("/", (req, res) => {
   res.send("Welcome to our greencart-logistics");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const startServer = async () => {
+  await connectDB();
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+startServer();
